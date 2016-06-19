@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- CUSTOMIZE THESE FOR YOUR APP -->
+    <string name="app_name">Pursue</string>
+    <string name="facebook_app_id">1049389091811416</string>
+
+    <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
+    <string name="main_nav_menu_item_home">Home</string>
+    <string name="title_activity_item_detail">Item Detail</string>
+    <string name="title_activity_item_list">Item List</string>
+    <string name="title_activity_main">@string/app_name</string>
+    <string name="title_activity_sign_in">Sign-in</string>
+    <string name="button_text_sign_in">SIGN IN</string>
+    <string name="button_text_sign_out">SIGN OUT</string>
+    <string name="sign_in_email">Email</string>
+    <string name="sign_in_password">Password</string>
+    <string name="sign_in_new_account">Create New Account</string>
+    <string name="sign_in_forgot_password">Forgot Your Password?</string>
+    <string name="sign_in_or">or sign in with</string>
+    <string name="main_nav_menu_default_user_text">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020</string>
+
+    <!-- Navigation items -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Settings menu items -->
+    <string name="action_sign_out">Sign Out</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Content Descriptions -->
+    <string name="logo_desc">This is the logo for Pursue.</string>
+    <string name="nav_icon_desc">This icon will show and hide the navigation menu.</string>
+    <string name="facebook_btn_desc">This button logs the user in with their facebook credentials.</string>
+    <string name="google_btn_desc">This button logs the user in with their google credentials.</string>
+
+</resources>
