@@ -1,2 +1,9 @@
 <resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <item name="android:colorControlHighlight">@color/colorHighLight</item>
+
+    </style>
+
 </resources>

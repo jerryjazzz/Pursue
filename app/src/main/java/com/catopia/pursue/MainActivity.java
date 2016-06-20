@@ -6,38 +6,52 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
+    /**
+     * Logging tag for this class.
+     */
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     /**
      * The identity manager used to keep track of the current user account.
      */
     private IdentityManager identityManager;
 
+    /**
+     * This will be all the user's details that is attached to their facebook or google account.
+     */
+    @BindView(R.id.userName) TextView userNameTextView;
+    @BindView(R.id.userProfilePic) ImageView userPicImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         // Obtain a reference to the mobile client. It is created in the Application class,
         // but in case a custom Application class is not used, we initialize it here if necessary.
         AWSMobileClient.initializeMobileClientIfNecessary(this);
-
-        // Obtain a reference to the mobile client. It is created in the Application class.
-        final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
-
         // Obtain a reference to the identity manager.
-        identityManager = awsMobileClient.getIdentityManager();
+        identityManager = AWSMobileClient.defaultMobileClient().getIdentityManager();
 
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,6 +62,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+
+        userNameTextView = (TextView) header.findViewById(R.id.userName);
+        userPicImageView = (ImageView) header.findViewById(R.id.userProfilePic);
+
+        fetchUserIdentity();
     }
 
     @Override
@@ -64,38 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
-        if (id == R.id.action_sign_out)
-        {
-            // The user is currently signed in with a provider. Sign out of that provider.
-            identityManager.signOut();
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
@@ -103,19 +92,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera)
-        {
-            // Handle the camera action
-        }
-        else if (id == R.id.nav_gallery)
+        if (id == R.id.nav_filter)
         {
 
         }
-        else if (id == R.id.nav_slideshow)
-        {
-
-        }
-        else if (id == R.id.nav_manage)
+        else if (id == R.id.nav_saved_job)
         {
 
         }
@@ -123,12 +104,91 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
 
         }
-        else if (id == R.id.nav_send)
+        else if (id == R.id.nav_setting)
         {
 
+        }
+        else if (id == R.id.nav_sign_out)
+        {
+            // The user is currently signed in with a provider. Sign out of that provider.
+            identityManager.signOut();
+            startActivity(new Intent(this, SignInActivity.class));
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Fetches the user identity safely on the background thread.  It may make a network call.
+     */
+    private void fetchUserIdentity()
+    {
+        Log.d(LOG_TAG, "fetchUserIdentity");
+
+        AWSMobileClient.defaultMobileClient().getIdentityManager().getUserID(new IdentityManager.IdentityHandler()
+        {
+            @Override
+            public void handleIdentityID(String identityId)
+            {
+                clearUserInfo();
+                // We have successfully retrieved the user's identity. You can use the
+                // user identity value to uniquely identify the user. For demonstration
+                // purposes here, we will display the value in a text view.
+                if (identityManager.isUserSignedIn())
+                {
+
+                    userNameTextView.setText(identityManager.getUserName());
+
+                    if (identityManager.getUserImage() != null)
+                    {
+                        userPicImageView.setImageBitmap(identityManager.getUserImage());
+                    }
+                }
+            }
+
+            @Override
+            public void handleError(Exception exception)
+            {
+                clearUserInfo();
+
+                new AlertDialog.Builder(getApplicationContext())
+                        .setTitle(R.string.alert_error_title)
+                        .setMessage(getString(R.string.alert_error_message)
+                                + exception.getMessage())
+                        .setNegativeButton(R.string.alert_error_dismiss, null)
+                        .create()
+                        .show();
+            }
+        });
+    }
+
+    private void clearUserInfo()
+    {
+        clearUserImage();
+
+        try
+        {
+            userNameTextView.setText(getString(R.string.unknown_user));
+        }
+        catch (final IllegalStateException e)
+        {
+            // This can happen when app shuts down and activity is gone
+            Log.w(LOG_TAG, "Unable to reset user name back to default.");
+        }
+    }
+
+    private void clearUserImage()
+    {
+        try
+        {
+            userPicImageView.setImageResource(R.mipmap.user);
+        }
+        catch (final IllegalStateException e)
+        {
+            // This can happen when app shuts down and activity is gone
+            Log.w(LOG_TAG, "Unable to reset user image back to default image.");
+        }
     }
 }

@@ -22,6 +22,21 @@
     <!-- Navigation items -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="unknown_user">Unknown User</string>
+    <string name="alert_error_title">Failed Identity Retrieval</string>
+    <string name="alert_error_message">Could not retrieve the user identity: </string>
+    <string name="alert_error_dismiss">DISMISS</string>
+    <string name="unknown_identity_text">&lt;UNKNOWN IDENTITY&gt;</string>
+    <string name="user_name">Unknown User</string>
+    <string name="nav_setting">Settings</string>
+    <string name="nav_filter">Search Filters</string>
+    <string name="nav_sign_out">Sign Out</string>
+    <string name="nav_share">Share</string>
+    <string name="nav_send">Send</string>
+    <string name="nav_communicate">Communicate</string>
+    <string name="nav_job">Jobs</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_saved_jobs">Saved Jobs</string>
 
     <!-- Settings menu items -->
     <string name="action_sign_out">Sign Out</string>
@@ -32,5 +47,67 @@
     <string name="nav_icon_desc">This icon will show and hide the navigation menu.</string>
     <string name="facebook_btn_desc">This button logs the user in with their facebook credentials.</string>
     <string name="google_btn_desc">This button logs the user in with their google credentials.</string>
+    <string name="profile_pic_desc">This is a picture of the user. A picture will display if your facebook or google account has a profile picture attached to it.</string>
+    <string name="saved_jobs">Saved Jobs</string>
+    <string name="title_activity_job_filter">Search Filter</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
 
 </resources>

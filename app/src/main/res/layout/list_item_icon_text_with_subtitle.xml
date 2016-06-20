@@ -28,4 +28,5 @@
         android:layout_below="@id/list_item_title"
         android:layout_toEndOf="@+id/list_item_icon"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
+
 </RelativeLayout>
