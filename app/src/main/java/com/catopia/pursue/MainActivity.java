@@ -1,6 +1,7 @@
 package com.catopia.pursue;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,10 +19,10 @@ import android.widget.TextView;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        JobFilterFragment.OnFragmentInteractionListener,
+        SettingsFragment.OnFragmentInteractionListener
 {
     /**
      * Logging tag for this class.
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * This will be all the user's details that is attached to their facebook or google account.
      */
-    @BindView(R.id.userName) TextView userNameTextView;
-    @BindView(R.id.userProfilePic) ImageView userPicImageView;
+    private TextView userNameTextView;
+    private ImageView userPicImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,24 +51,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         identityManager = AWSMobileClient.defaultMobileClient().getIdentityManager();
 
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
+        // Attach toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        // Attach Nav drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        // Set the nav view
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        // Initialize header
         View header = navigationView.getHeaderView(0);
-
+        // Reference views to the nav header
         userNameTextView = (TextView) header.findViewById(R.id.userName);
         userPicImageView = (ImageView) header.findViewById(R.id.userProfilePic);
-
+        // method call to retrieve user name and picture
         fetchUserIdentity();
     }
 
@@ -92,9 +92,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_filter)
+        if (id == R.id.nav_home)
         {
 
+        }
+        else if (id == R.id.nav_filter)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerFragment, new JobFilterFragment()).commit();
         }
         else if (id == R.id.nav_saved_job)
         {
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_setting)
         {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerFragment, new SettingsFragment()).commit();
         }
         else if (id == R.id.nav_sign_out)
         {
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Fetches the user identity safely on the background thread.  It may make a network call.
      */
-    private void fetchUserIdentity()
+    public void fetchUserIdentity()
     {
         Log.d(LOG_TAG, "fetchUserIdentity");
 
@@ -190,5 +194,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // This can happen when app shuts down and activity is gone
             Log.w(LOG_TAG, "Unable to reset user image back to default image.");
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri)
+    {
+
     }
 }

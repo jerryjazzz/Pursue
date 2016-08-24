@@ -4,6 +4,10 @@
     <item android:title="@string/nav_job" >
         <menu>
             <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_swipe_jobs" />
+            <item
                 android:id="@+id/nav_filter"
                 android:icon="@drawable/ic_menu_filter"
                 android:title="@string/nav_filter" />
@@ -11,11 +15,6 @@
                 android:id="@+id/nav_saved_job"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/nav_saved_jobs" />
-        </menu>
-    </item>
-
-    <item android:title="@string/nav_communicate">
-        <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"

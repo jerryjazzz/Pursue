@@ -240,7 +240,8 @@ public class GoogleSignInProvider implements SignInProvider
         if (token != null)
         {
             Log.d(LOG_TAG, "Google Token is OK. Token hashcode = " + token.hashCode());
-        } else
+        }
+        else
         {
             Log.d(LOG_TAG, "Google Token is NULL.");
         }
@@ -300,8 +301,7 @@ public class GoogleSignInProvider implements SignInProvider
      * {@inheritDoc}
      */
     @Override
-    public View.OnClickListener initializeSignInButton(final Activity signInActivity, final View buttonView,
-                                                       final IdentityManager.SignInResultsHandler resultsHandler)
+    public View.OnClickListener initializeSignInButton(final Activity signInActivity, final View buttonView, final IdentityManager.SignInResultsHandler resultsHandler)
     {
         this.signInActivity = signInActivity;
         this.resultsHandler = resultsHandler;
@@ -314,13 +314,10 @@ public class GoogleSignInProvider implements SignInProvider
             {
                 Log.w(LOG_TAG, "Google Play services recoverable error.");
                 api.showErrorDialogFragment(signInActivity, code, REQUEST_GOOGLE_PLAY_SERVICES);
-            } else
+            }
+            else
             {
-                final boolean isDebugBuild =
-                        (0 != (signInActivity
-                                .getApplicationContext()
-                                .getApplicationInfo()
-                                .flags & ApplicationInfo.FLAG_DEBUGGABLE));
+                final boolean isDebugBuild = (0 != (signInActivity.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
 
                 if (!isDebugBuild)
                 {
@@ -369,12 +366,13 @@ public class GoogleSignInProvider implements SignInProvider
                     mIntentInProgress = false;
                     mGoogleApiClient.connect();
                 }
-            } else
-            {
-                resultsHandler.onError(GoogleSignInProvider.this,
-                        new IllegalStateException(result.toString()));
             }
-        } else
+            else
+            {
+                resultsHandler.onError(GoogleSignInProvider.this, new IllegalStateException(result.toString()));
+            }
+        }
+        else
         {
             Log.w(LOG_TAG, "onConnectionFailed while Google sign-in intent is already in progress.");
         }

@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.catopia.pursue.SettingsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unitsSwitch"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:textOn="mi"
+        android:textOff="km"
+        android:showText="true"
+        android:thumbTextPadding="2dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_units_preference"
+        android:id="@+id/unitsPreferenceTextView"
+        android:textSize="15sp"
+        android:layout_alignTop="@+id/unitsSwitch"
+        android:layout_alignBottom="@+id/unitsSwitch"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unitsTextView"
+        android:layout_alignTop="@+id/unitsSwitch"
+        android:layout_alignBottom="@+id/unitsSwitch"
+        android:singleLine="false"
+        android:textSize="15sp"
+        android:layout_toEndOf="@+id/unitsPreferenceTextView"
+        android:paddingLeft="5dp"/>
+</RelativeLayout>

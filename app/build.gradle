@@ -31,6 +31,6 @@ dependencies {
     compile 'com.amazonaws:aws-android-sdk-cognito:2.2.11'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.google.android.gms:play-services-plus:9.0.2'
-    compile 'com.jakewharton:butterknife:8.1.0'
     compile 'com.synnapps:carouselview:0.0.9'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
 }
